@@ -1,79 +1,211 @@
-import React from 'react';
-import { StyleSheet, Image,  Text} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator, DrawerActions } from '@react-navigation/stack';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import * as React from 'react';
+import { StyleSheet, TouchableOpacity, Image, View, Text } from "react-native";
+import { NavigationContainer,DrawerActions } from '@react-navigation/native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 
+import AlbumScreen from './src/screens/AlbumScreen';
 
-import HomeStackScreen from "./src/sreen/HomeStackScreen.js"
-import MyBookStackScreen from "./src/sreen/MyBookStackScreen.js"
-import FavoriteStackScreen from "./src/sreen/FavoriteStackScreen.js"
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <View style={styles.headerStyle}>
+        <Image
+          style={styles.userimg}
+          source={{
+            uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/img_user_photo.png?raw=true"
+          }}
+        />
+        <View style={styles.userinfowitharrowlayout}>
+          <View style={styles.userinfolayout}>
+            <Text style={styles.userinfo}>GamexHCI</Text>
+            <Text style={styles.userinfo2}>gdlab2017@gmail.com</Text>
+          </View>
+          <Image
+            style={styles.userarrow}
+            source={{
+              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/btn_down_arrow.png?raw=true"
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.menubox}>
+          <Image
+            style={styles.menuimg}
+            source={{
+              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_home.png?raw=true"
+            }}
+          />
+          <Text style={styles.menutext}>Home</Text>
+        </View>
+      <DrawerItemList {...props} style={{width:310,height:60,backgroundColor:"#00b49f"}}/>
 
+        <View style={styles.menubox}>
+          <Image
+            style={styles.menuimg}
+            source={{
+              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_favorites.png?raw=true"
+            }}
+          />
+          <Text style={styles.menutext}>Favorites</Text>
+        </View>
+        <View style={styles.menubox}>
+          <Image
+            style={styles.menuimg}
+            source={{
+              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_setting.png?raw=true"
+            }}
+          />
+          <Text style={styles.menutext}>Settings</Text>
+        </View>
+        <View style={styles.menubox}>
+          <Image
+            style={styles.menuimg}
+            source={{
+              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_aboutus.png?raw=true"
+            }}
+          />
+          <Text style={styles.menutext}>About us</Text>
+        </View>
+    </DrawerContentScrollView>
+  )
+}
+const Drawer = createDrawerNavigator();
 
-
-const Tab = createBottomTabNavigator();
-
-
-function App() {
+const App =()=>{
   return (
     <NavigationContainer>
-    <Tab.Navigator  
-    tabBarOptions={{
-      activeTintColor:'#00b49f',
-      inactiveTintColor: '#818181',
-      
-    }}>
-        <Tab.Screen 
-        name="Home" 
-        component={HomeStackScreen} 
-        options = {{
-          
-          tabBarIcon : ({focused}) => (
-            
-            focused
-            ? <Image source={{uri: "https://github.com/tsaiyuyes7/wk4_Zeplin_HW/blob/master/assets/icon/touch/icon_bottomnav_home_seleced.png?raw=true"}} style={{height:24,width:24 }}  />
-            : <Image source={{uri: "https://github.com/tsaiyuyes7/wk4_Zeplin_HW/blob/master/assets/icon/untouch/icon_bottomnav_home.png?raw=true"}} style={{height:24,width:24 }}  />
-          )
-
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerStyle={{
+          width: 310,
+          marginTop:-20,
+          backgroundColor: "#ebebeb"
         }}
+        drawerContent={props => <CustomDrawerContent {...props}
+        laybelStyle={{ color: "#00b49f", fontWeight: "600"}} />}
+        drawerContentOptions={{activeBackgroundColor:"#00b49f",activeTintColor:"#fff",inactiveBackgroundColor:"#ebebeb",inactiveTintColor:"#5c5c5c"}}
+      >
+        <Drawer.Screen
+          name="My Book"
+          component={AlbumScreen}
+          options={{
+            drawerIcon:({})=>(
+              <Image
+              style={styles.menuimg2}
+              source={{
+                uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_mybook_pressed.png?raw=true"
+              }}
+            />
+            )
+          }}
         />
-        <Tab.Screen 
-        name="MyBook" 
-        component={MyBookStackScreen} 
-        options = {{
-          
-          tabBarIcon : ({focused}) => (
-
-            focused
-            ? <Image source={{uri: "https://github.com/tsaiyuyes7/wk4_Zeplin_HW/blob/master/assets/icon/touch/icon_bottomnav_mybook_selected.png?raw=true"}} style={{height:24,width:24 }}  />
-            : <Image source={{uri: "https://github.com/tsaiyuyes7/wk4_Zeplin_HW/blob/master/assets/icon/untouch/icon_bottomnav_mybook.png?raw=true"}} style={{height:24,width:24 }}  /> 
-          )
-
-        }}
-        />
-        <Tab.Screen 
-        name="Favorite" 
-        component={FavoriteStackScreen}
-        options = {{
-          
-          tabBarIcon : ({focused}) => (
-            focused
-            ? <Image source={{uri: "https://github.com/tsaiyuyes7/wk4_Zeplin_HW/blob/master/assets/icon/touch/icon_bottomnav_favorites_seleced.png?raw=true"}} style={{height:24,width:24 }}  />
-            : <Image style={{height:24,width:24 }} source={{uri: "https://github.com/tsaiyuyes7/wk4_Zeplin_HW/blob/master/assets/icon/untouch/icon_bottomnav_favorites.png?raw=true"}}  />
-            
-          )
-
-        }}
-        />
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  menuStyle: {
+    width: 50,
+    height: 50,
+    marginLeft: 8
+  },
+  searchStyle: {
+    width: 50,
+    height: 50,
+    marginRight: 8
+  },
+  headertitleStyle: {
+    fontWeight: '300',
+    fontSize: 20,
+    color: "#fff"
+  },
+  layout:{
+    backgroundColor:"rgba(184,184,184,0.5)"
+  },
+  headerStyle: {
+    width: 414,
+    height: 210,
+    backgroundColor: "#00b49f",
+    shadowColor:"#000",
+    shadowOffset:{width: 2, height: 0},
+    shadowOpacity:0.1,
+    marginTop:-30,
+    marginBottom:8
+  },
+  userimg: {
+    width: 70,
+    height: 70,
+    marginTop: 67,
+    marginLeft: 13
+  },
+  userinfowitharrowlayout: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  userinfo: {
+    width: 230,
+    height: 15,
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: "600",
+    marginBottom: 5,
+    marginLeft: 16
+  },
+  userinfo2: {
+    width: 230,
+    height: 18,
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: "600",
+    marginBottom: 5,
+    marginLeft: 16
+  },
+  userarrow: {
+    width: 24,
+    height: 24,
+    marginLeft: 18
+  },
+  menulayout: {
+    width: 310,
+    height: 650,
+    backgroundColor: "#ebebeb",
+    shadowColor:"#000",
+    shadowOffset:{width: 56, height: 0},
+    shadowOpacity:0.1
+  },
+  menu:{
+    marginTop:8
+  },
+  menubox: {
+    flexDirection: "row",
+    height: 56,
+    width: 310,
+    alignItems: "center",
+    // backgroundColor:"#000"
+  },
+  menuimg: {
+    width: 24,
+    height: 24,
+    marginLeft:24
+  },
+  menuimg2: {
+    width: 24,
+    height: 24,
+    marginLeft:7
+  },
+  menutext:{
+    marginLeft:32,
+    width:176,
+    height:18,
+    fontSize:14,
+    fontWeight:"600",
+    color:"#5c5c5c"
+  },
+  layout:{
+    marginTop:8
+  }
+});
 
 export default App;

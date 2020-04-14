@@ -1,9 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "wk4zeplin",
-    "privacy": "public",
-    "sdkVersion": "36.0.0",
+    "name": "week4w1",
+    "slug": "week4w1",
     "platforms": [
       "ios",
       "android",
