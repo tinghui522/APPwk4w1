@@ -3,6 +3,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Button,Toucha
 import { ProgressBar, Colors } from 'react-native-paper';
 
 const AlbumDetail = ({ album, navigation }) => {
+  var buttonColor="#fd686b";
+  function changeButtonColor({buttonColor}){
+  if(buttonColor==="white"){
+    buttonColor = "#fd686b"; }
+  else {buttonColor = "white";}
+}
    return (
       <View style={styles.cardContainerStyle}>
         <View style={styles.cardSectionStyle}>
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1
   },
   imageStyle: {
-    height: 500,
+    height: 600,
     width: null
   },
   wordStyle:{

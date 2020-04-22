@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, Image, View, Text } from "react-native";
 import { NavigationContainer,DrawerActions } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 
 import AlbumScreen from './src/screens/AlbumScreen';
 
-function CustomDrawerContent(props) {
+const CustomDrawerContent = ({ ...props }) => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.headerStyle}>
@@ -28,80 +29,112 @@ function CustomDrawerContent(props) {
           />
         </View>
       </View>
-      <View style={styles.menubox}>
-          <Image
-            style={styles.menuimg}
-            source={{
-              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_home.png?raw=true"
-            }}
-          />
-          <Text style={styles.menutext}>Home</Text>
-        </View>
-      <DrawerItemList {...props} style={{width:310,height:60,backgroundColor:"#00b49f"}}/>
 
-        <View style={styles.menubox}>
-          <Image
-            style={styles.menuimg}
-            source={{
-              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_favorites.png?raw=true"
-            }}
-          />
-          <Text style={styles.menutext}>Favorites</Text>
-        </View>
-        <View style={styles.menubox}>
-          <Image
-            style={styles.menuimg}
-            source={{
-              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_setting.png?raw=true"
-            }}
-          />
-          <Text style={styles.menutext}>Settings</Text>
-        </View>
-        <View style={styles.menubox}>
-          <Image
-            style={styles.menuimg}
-            source={{
-              uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_aboutus.png?raw=true"
-            }}
-          />
-          <Text style={styles.menutext}>About us</Text>
-        </View>
-    </DrawerContentScrollView>
+      <DrawerItemList {...props} />
+
+      </DrawerContentScrollView>
   )
 }
 const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
-const App =()=>{
-  return (
-    <NavigationContainer>
+const App = () => {
+  return (   
+      <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="My Book"
         drawerStyle={{
-          width: 310,
-          marginTop:-20,
+          width: 310 ,
+          // height: 640,
           backgroundColor: "#ebebeb"
         }}
         drawerContent={props => <CustomDrawerContent {...props}
-        laybelStyle={{ color: "#00b49f", fontWeight: "600"}} />}
-        drawerContentOptions={{activeBackgroundColor:"#00b49f",activeTintColor:"#fff",inactiveBackgroundColor:"#ebebeb",inactiveTintColor:"#5c5c5c"}}
+          laybelStyle={{ color: "#00b49f", fontWeight: "600" }} />}
+        drawerContentOptions={{ activeBackgroundColor: "#00b49f", activeTintColor: "#fff",  itemStyle: { marginLeft: 0, marginRight: 0, borderRadius: 0 } }}
       >
+        <Drawer.Screen
+          name="Home"
+          component={AlbumScreen}
+          options={{
+            drawerIcon: ({focused }) => {
+              let iconPath;
+              iconPath=focused?require('./src/img/icon_drawer_home_pressed.png'):require('./src/img/icon_drawer_home.png');
+              return (
+              <Image
+                style={styles.menuimg}
+                source={iconPath}
+              />
+              );
+             }
+          }}
+        />
         <Drawer.Screen
           name="My Book"
           component={AlbumScreen}
           options={{
-            drawerIcon:({})=>(
+            drawerIcon: ({focused }) => {
+              let iconPath;
+              iconPath=focused?require('./src/img/icon_drawer_mybook_pressed.png'):require('./src/img/icon_drawer_mybook.png');
+              return (
               <Image
-              style={styles.menuimg2}
-              source={{
-                uri: "https://github.com/tinghui522/APPwk4w1/blob/master/src/img/icon_drawer_mybook_pressed.png?raw=true"
-              }}
-            />
-            )
+                style={styles.menuimg}
+                source={iconPath}
+              />
+              );
+             }
           }}
         />
-      </Drawer.Navigator>
+        <Drawer.Screen
+          name="Favorites"
+          component={AlbumScreen}
+          options={{
+            drawerIcon: ({focused }) => {
+              let iconPath;
+              iconPath=focused?require('./src/img/icon_drawer_favorites_pressed.png'):require('./src/img/icon_drawer_favorites.png');
+              return (
+              <Image
+                style={styles.menuimg}
+                source={iconPath}
+              />
+              );
+             }
+          }}
+        />
+        <Drawer.Screen
+          name="Settings"
+          component={AlbumScreen}
+          options={{
+            drawerIcon: ({focused }) => {
+              let iconPath;
+              iconPath=focused?require('./src/img/icon_drawer_setting_pressed.png'):require('./src/img/icon_drawer_setting.png');
+              return (
+              <Image
+                style={styles.menuimg}
+                source={iconPath}
+              />
+              );
+             }
+          }}
+        />
+        <Drawer.Screen
+          name="About us"
+          component={AlbumScreen}
+          options={{
+            drawerIcon: ({focused }) => {
+              let iconPath;
+              iconPath=focused?require('./src/img/icon_drawer_aboutus_pressed.png'):require('./src/img/icon_drawer_aboutus.png');
+              return (
+              <Image
+                style={styles.menuimg}
+                source={iconPath}
+              />
+              );
+             }
+          }}
+        />
+         </Drawer.Navigator>
     </NavigationContainer>
-  );
+ );
 }
 
 const styles = StyleSheet.create({
@@ -116,7 +149,7 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   headertitleStyle: {
-    fontWeight: '300',
+    fontWeight: '700',
     fontSize: 20,
     color: "#fff"
   },
@@ -125,24 +158,24 @@ const styles = StyleSheet.create({
   },
   headerStyle: {
     width: 414,
-    height: 210,
+    height: 220,
     backgroundColor: "#00b49f",
     shadowColor:"#000",
     shadowOffset:{width: 2, height: 0},
     shadowOpacity:0.1,
-    marginTop:-30,
+    marginTop:-50,
     marginBottom:8
   },
   userimg: {
     width: 70,
     height: 70,
-    marginTop: 67,
+    marginTop: 70,
     marginLeft: 13
   },
   userinfowitharrowlayout: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 20,
   },
   userinfo: {
     width: 230,
@@ -169,14 +202,14 @@ const styles = StyleSheet.create({
   },
   menulayout: {
     width: 310,
-    height: 650,
+    height: 600,
     backgroundColor: "#ebebeb",
     shadowColor:"#000",
     shadowOffset:{width: 56, height: 0},
     shadowOpacity:0.1
   },
   menu:{
-    marginTop:8
+    marginTop:5
   },
   menubox: {
     flexDirection: "row",
@@ -186,20 +219,20 @@ const styles = StyleSheet.create({
     // backgroundColor:"#000"
   },
   menuimg: {
-    width: 24,
-    height: 24,
-    marginLeft:24
+    width: 30,
+    height: 30,
+    marginLeft:20
   },
   menuimg2: {
-    width: 24,
-    height: 24,
+    width: 30,
+    height: 30,
     marginLeft:7
   },
   menutext:{
     marginLeft:32,
     width:176,
     height:18,
-    fontSize:14,
+    fontSize:15,
     fontWeight:"600",
     color:"#5c5c5c"
   },

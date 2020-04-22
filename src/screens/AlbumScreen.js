@@ -1,6 +1,7 @@
 import React from "react";
 import { View, FlatList, StyleSheet, Image, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 import { DrawerActions } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AlbumDetail from "../components/AlbumDetail";
 import albumData from "../json/album.json";
 

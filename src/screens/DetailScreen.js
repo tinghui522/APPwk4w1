@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   userinfowitharrowlayout: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: -20,
   },
   userinfo: {
     width: 230,
@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
     marginLeft: 18
   },
   menulayout: {
-    width: 320,
-    height: 640,
+    width: 310,
+    height: 600,
     backgroundColor: "#ebebeb",
     shadowColor:"#000",
     shadowOffset:{width: 56, height: 0},
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
   },
   menubox: {
     flexDirection: "row",
-    height: 80,
-    width: 320,
+    height: 120,
+    width: 310,
     alignItems: "center",
     // backgroundColor:"#000"
   },
